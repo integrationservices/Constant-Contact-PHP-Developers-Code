@@ -8,8 +8,7 @@ REQUIREMENTS:
 PHP 4.3.0 or higher
 XML extension installed and enabled
 curl extension with SSL support
-
-Constant Contact account username and password.
+Constant Contact account username and password. If you do not have a constant contact account signup for a free 60 day trial using this link: http://bit.ly/cctrial
 
 IMPORTANT:
 This code has an API key hardcoded.
@@ -51,16 +50,14 @@ Check the example PHP scripts within /examples/
 It is best not to edit the class.cc.php file directly or upgrading will be harder.
 Instead create your own class and extend the cc class.
 If your not familar with how to extend a class you can read up on it here:
-http://php.net/language.oop5.basic.extends
+http://uk3.php.net/manual/en/language.oop5.basic.php#language.oop5.basic.extends
 	
 -------------------------------------------------------
 DOCUMENTATION:
 -------------------------------------------------------
-API Docs for the PHP code can be found within /docs/
-We provide both HTML and PDF formats
-The docs were generated from inline comments using PHPDoc (phpdoc.org)
-Other documentation can be found within the /examples/ sub-folder.
-You should also be familar with the Constant Contact API Docs:
+API Docs for the PHP code can be found within inline comments in class.cc.php
+Other documentation can be found within the files in the /examples/ sub-folder.
+Also the Constant Contact API Docs can be found here:
 http://developer.constantcontact.com/doc/reference
 
 -------------------------------------------------------
@@ -68,5 +65,5 @@ FURTHER HELP:
 -------------------------------------------------------
 If you need help please see http://integrationservic.es/
 I can't guarantee you a reply but if you've found a bug I'd be happy to investigate (please email your bug report to info@ the above domain).
-Before you get in touch please make sure you have downloaded the latest code incase a newer version has been released.
+Before you get in touch please make sure you have downloaded the latest code.
 
