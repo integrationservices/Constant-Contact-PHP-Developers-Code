@@ -1,0 +1,68 @@
+Version 1.8.1
+------------
+Fixed a bug in the set_api_key() method where it failed to set the API key properly
+
+------------
+The developers code now uses the PHP curl extension
+
+Version 1.7.2
+------------
+* Fixed a bug with 1and1 servers that caused a warning mesage to appear.
+
+Version 1.7.1
+------------
+* Bug fixes and a few small improvements.
+* more inline docs
+
+Version 1.7.0
+------------
+* The following methods have been removed and the http_send method used directly instead:
+	http_get
+	http_post
+	http_delete
+	http_put
+* create_campaign() method now works, see /examples/create_campaign.php for a working example.
+* get_export_file_columns() was only compatible with PHP 5 before, now works with PHP 4.
+* Other improvements to the code, some new methods have been added.
+* More API documentation.
+* I'm now following a 3 digit version number string for all releases.
+
+Version 1.6
+------------
+This release contains an important bug fix to the HTTP connection handling so it handles chunked encoding correctly.
+
+Version 1.5
+------------
+New features Include:
+* Delete Campaign
+* Get Email Addresses
+* get_all_lists() - returns all contact lists sorted by the SortOrder field
+* Create Campaign (currently not working)
+* Updated example scripts
+* Plus other fixes and improvements
+
+Version 1.4
+------------
+* Now supports new API features.
+* Fix to the query campaigns method: was using wrong variable for the status.
+* Fix to all methods, items that returned 1 item broke and failed to parse the data correctly.
+
+Version 1.3
+------------
+* Code now supports the campaigns API - events coming soon.
+* Usernames with spaces are now encoded to RFC 1738 standard.
+* Fix to the convert_timestamp() method
+* Improved documentation and more examples.
+
+Version 1.2
+------------
+* Improved documentation now included.
+* Fix to the update_contact() method and docs.
+* Fix to the create_list() method.
+
+Version 1.1
+------------
+* The code now supports all functions available within the activities API.
+* Quite a bit of tweaking had to be done to the core code to make this work but none of the documented functions have been altered in any way that will affect existing installations.
+* A couple of minor fixes and improvements have also been made in this release.
+More documentation has been added along with examples for the new activity functions.
