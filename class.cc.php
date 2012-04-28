@@ -205,7 +205,7 @@ class cc {
 	 *
 	 * @access public
 	 */
-	var $http_linebreak = "\r\n";
+	var $http_linebreak = "\n";
 
 	/**
 	 * The HTTP requests headers, use @see http_headers_add() to add individual headers
@@ -582,9 +582,9 @@ class cc {
 
 		$xml = $this->load_url("lists", 'post', $xml_post, 201);
 
-        if($xml):
-            return true;
-        endif;
+        if($xml) {
+			return $this->get_id_from_link($xml["entry"]["id"]);
+        }
 
         /*
 		if(isset($this->http_response_headers['Location']) && trim($this->http_response_headers['Location']) != ''):
@@ -1181,7 +1181,7 @@ $xml_data .= '
 	 */
 	function create_contacts($contacts, $lists)
 	{
-		$params['activityType'] = 'SV_ADD';
+		$params[] = 'activityType=ADD_CONTACTS';
 
 		if(is_array($contacts) && count($contacts) > 0):
 			// get fieldnames from keys of the first contact array
@@ -1191,33 +1191,34 @@ $xml_data .= '
 			// transform the given array into a CSV formatted string
 			$contacts_string = '';
 			foreach($contacts as $k => $contact):
+				$tmp = array();
 				foreach($fieldnames as $k => $fieldname):
 					if(isset($contact[$fieldname]) || is_null($contact[$fieldname])):
-						$contacts_string .= $contact[$fieldname].",";
+						$tmp[] = $contact[$fieldname];
 					else:
 						$this->last_error = 'contacts array is not formatted correctly, please ensure all contact entries have the same fields and values';
 						return false;
 					endif;
 				endforeach;
-				$contacts_string .= "{$this->http_linebreak}";
+				$contacts_string .= implode(", ", $tmp) . "{$this->http_linebreak}";
 			endforeach;
 
-			$params['data'] = implode(',', $fieldnames)."{$this->http_linebreak}" . $contacts_string;
+			$params[] = "data=".(implode(',', $fieldnames). "{$this->http_linebreak}" . $contacts_string);
 
 		elseif(file_exists($contacts) && is_readable($contacts)):
 			// grab the file and output it directly in the request
-			$params['data'] = file_get_contents($contacts);
+			$params[] = "data=".file_get_contents($contacts);
 		endif;
 
 		if(is_array($lists)):
 			foreach($lists as $id):
-				$params['lists'][] = $this->get_list_url($id);
+				$params[] = "lists=".$this->get_list_url($id);
 			endforeach;
 		endif;
 
 		$this->http_set_content_type('application/x-www-form-urlencoded');
 
-		$xml = $this->load_url("activities", 'post', $params, 201);
+		$xml = $this->load_url("activities", 'post', implode("&", $params), 201);
 
         if($xml):
             return true;
@@ -1889,7 +1890,11 @@ id="'.$this->get_http_api_url().'campaigns/1100546096289">
         curl_setopt($ch, CURLOPT_TIMEOUT, $this->http_request_timeout);
 
         if($method == 'POST' OR $method == 'PUT' AND count($params) > 0):
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+			if(is_array($params)) {
+				curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params, '', '&'));
+			} else {
+				curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+			}
         endif;
 
         curl_setopt($ch, CURLOPT_FAILONERROR, 1);
