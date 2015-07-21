@@ -765,6 +765,11 @@ $xml_post .= '
 		$url = "$_url/$id";
 
         $email = strtolower($email);
+        
+        // Due to an API change we need to set this to customer to remove from all lists
+        if (count($lists) == 0) {
+        	$this->set_action_type('customer');
+	}
 
 		$xml_data = '<entry xmlns="http://www.w3.org/2005/Atom">
   <id>'.$url.'</id>
